@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -24,6 +25,23 @@ public class Rocket : MonoBehaviour
     {
         Thrust();
         Rotate();
+    }
+
+    void OnCollisionEnter(Collision collision){
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                print("OK");
+                break;
+            case "Finish":
+                print("Hit finish");
+                SceneManager.LoadScene(1);
+                break;
+            default:
+                print("Dead");
+                SceneManager.LoadScene(0);
+                break;
+        }
     }
 
     private void Thrust(){
